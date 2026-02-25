@@ -10,6 +10,8 @@ const navLinks = [
   { href: "#contactos", label: "Contactos" },
 ];
 
+const MAILTO = "mailto:Geral@teclick.pt?subject=Pedido%20de%20Or%C3%A7amento";
+
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -37,7 +39,9 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-4 h-16 sm:h-20">
           <a href="#" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} data-testid="link-home-logo" className="shrink-0">
-            <img src={logoPath} alt="TECLiCK" className="h-10 sm:h-12 w-auto" />
+            <div className="h-10 sm:h-12 px-2 rounded-md bg-[#e8e8e8] flex items-center justify-center">
+              <img src={logoPath} alt="TECLiCK" className="h-8 sm:h-10 w-auto" />
+            </div>
           </a>
 
           <nav className="hidden md:flex items-center gap-1" data-testid="nav-desktop">
@@ -58,9 +62,11 @@ export default function Header() {
               <Phone className="w-4 h-4" />
               935 133 610
             </a>
-            <Button onClick={() => scrollTo("#contactos")} data-testid="button-header-cta">
-              Pedir Orçamento
-            </Button>
+            <a href={MAILTO}>
+              <Button data-testid="button-header-cta">
+                Pedir Orçamento
+              </Button>
+            </a>
           </div>
 
           <Button
@@ -93,9 +99,11 @@ export default function Header() {
                 <Phone className="w-4 h-4" />
                 935 133 610
               </a>
-              <Button className="w-full mt-2" onClick={() => scrollTo("#contactos")} data-testid="button-mobile-cta">
-                Pedir Orçamento
-              </Button>
+              <a href={MAILTO}>
+                <Button className="w-full mt-2" data-testid="button-mobile-cta">
+                  Pedir Orçamento
+                </Button>
+              </a>
             </div>
           </div>
         </div>

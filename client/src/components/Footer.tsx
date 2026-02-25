@@ -1,4 +1,4 @@
-import { Phone, MapPin, Clock } from "lucide-react";
+import { Phone, MapPin, Clock, Mail } from "lucide-react";
 import logoPath from "@assets/WhatsApp_Image_2026-02-25_at_10.26.56_1772015271484.jpeg";
 
 export default function Footer() {
@@ -12,7 +12,9 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           <div>
-            <img src={logoPath} alt="TECLiCK" className="h-10 w-auto mb-4" />
+            <div className="h-10 w-fit px-2 rounded-md bg-[#e8e8e8] flex items-center justify-center mb-4">
+              <img src={logoPath} alt="TECLiCK" className="h-8 w-auto" />
+            </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
               A sua solução tecnológica completa num único local. Particulares e empresas em Vila do Conde.
             </p>
@@ -50,6 +52,10 @@ export default function Footer() {
               <li className="flex items-center gap-2">
                 <Phone className="w-4 h-4 shrink-0 text-primary" />
                 <a href="tel:935133610" data-testid="link-footer-phone">935 133 610</a>
+              </li>
+              <li className="flex items-center gap-2">
+                <Mail className="w-4 h-4 shrink-0 text-primary" />
+                <a href="mailto:Geral@teclick.pt" data-testid="link-footer-email">Geral@teclick.pt</a>
               </li>
               <li className="flex items-start gap-2">
                 <Clock className="w-4 h-4 mt-0.5 shrink-0 text-primary" />

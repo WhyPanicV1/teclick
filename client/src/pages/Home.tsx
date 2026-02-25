@@ -1,31 +1,8 @@
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
-import { contactFormSchema, type ContactForm } from "@shared/schema";
-import { apiRequest } from "@/lib/queryClient";
-import { useToast } from "@/hooks/use-toast";
 import { useEffect, useRef, type ReactNode } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   Smartphone,
   Monitor,
@@ -39,12 +16,13 @@ import {
   Users,
   MapPin,
   Star,
-  CheckCircle,
   Phone,
   Clock,
-  Send,
+  Mail,
   ArrowDown,
 } from "lucide-react";
+
+const MAILTO = "mailto:Geral@teclick.pt?subject=Pedido%20de%20Or%C3%A7amento";
 
 function FadeIn({ children, className = "", delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -135,39 +113,7 @@ const testimonials = [
   { name: "Carla Oliveira", role: "Restauração", text: "Precisava de uma loja online urgente e entregaram tudo a tempo e com qualidade. Profissionais de verdade que percebem do negócio.", rating: 5 },
 ];
 
-const subjects = [
-  "Reparação de Telemóvel",
-  "Reparação de Computador",
-  "Impressão 3D",
-  "Criação de Website",
-  "Loja Online",
-  "Soluções com IA",
-  "Consultoria Tecnológica",
-  "Outro",
-];
-
 export default function Home() {
-  const { toast } = useToast();
-
-  const form = useForm<ContactForm>({
-    resolver: zodResolver(contactFormSchema),
-    defaultValues: { name: "", email: "", phone: "", subject: "", message: "" },
-  });
-
-  const mutation = useMutation({
-    mutationFn: async (data: ContactForm) => {
-      const res = await apiRequest("POST", "/api/contact", data);
-      return res.json();
-    },
-    onSuccess: () => {
-      toast({ title: "Mensagem enviada!", description: "Entraremos em contacto brevemente." });
-      form.reset();
-    },
-    onError: () => {
-      toast({ title: "Erro ao enviar", description: "Tente novamente ou ligue-nos diretamente.", variant: "destructive" });
-    },
-  });
-
   const scrollTo = (id: string) => {
     const el = document.querySelector(id);
     if (el) el.scrollIntoView({ behavior: "smooth" });
@@ -222,10 +168,12 @@ export default function Home() {
 
           <FadeIn delay={300}>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button size="lg" className="text-base px-8 group" onClick={() => scrollTo("#contactos")} data-testid="button-hero-cta">
-                Pedir Orçamento
-                <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
-              </Button>
+              <a href={MAILTO}>
+                <Button size="lg" className="text-base px-8 group" data-testid="button-hero-cta">
+                  Pedir Orçamento
+                  <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </a>
               <a href="tel:935133610">
                 <Button variant="outline" size="lg" className="text-base px-8" data-testid="button-hero-phone">
                   <Phone className="w-4 h-4 mr-2" />
@@ -421,160 +369,64 @@ export default function Home() {
             </FadeIn>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-10">
-            <FadeIn className="lg:col-span-3">
-              <Card className="p-6 sm:p-8 border-border/50">
-                <Form {...form}>
-                  <form onSubmit={form.handleSubmit((data) => mutation.mutate(data))} className="space-y-5" data-testid="form-contact">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                      <FormField
-                        control={form.control}
-                        name="name"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Nome *</FormLabel>
-                            <FormControl>
-                              <Input placeholder="O seu nome" {...field} data-testid="input-name" />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Email *</FormLabel>
-                            <FormControl>
-                              <Input type="email" placeholder="email@exemplo.com" {...field} data-testid="input-email" />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                      <FormField
-                        control={form.control}
-                        name="phone"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Telefone</FormLabel>
-                            <FormControl>
-                              <Input placeholder="912 345 678" {...field} data-testid="input-phone" />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="subject"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Assunto *</FormLabel>
-                            <Select onValueChange={field.onChange} value={field.value}>
-                              <FormControl>
-                                <SelectTrigger data-testid="select-subject">
-                                  <SelectValue placeholder="Selecione" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                {subjects.map((s) => (
-                                  <SelectItem key={s} value={s}>{s}</SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-
-                    <FormField
-                      control={form.control}
-                      name="message"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Mensagem *</FormLabel>
-                          <FormControl>
-                            <Textarea
-                              placeholder="Descreva o que precisa..."
-                              className="min-h-[140px] resize-none"
-                              {...field}
-                              data-testid="textarea-message"
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <Button
-                      type="submit"
-                      size="lg"
-                      className="w-full sm:w-auto text-base px-8"
-                      disabled={mutation.isPending}
-                      data-testid="button-submit-contact"
-                    >
-                      {mutation.isPending ? (
-                        "A enviar..."
-                      ) : mutation.isSuccess ? (
-                        <>
-                          <CheckCircle className="w-4 h-4 mr-2" />
-                          Mensagem Enviada
-                        </>
-                      ) : (
-                        <>
-                          <Send className="w-4 h-4 mr-2" />
-                          Enviar Mensagem
-                        </>
-                      )}
-                    </Button>
-                  </form>
-                </Form>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            <FadeIn>
+              <Card className="p-6 border-border/50 text-center group hover-elevate" data-testid="card-contact-email">
+                <div className="w-14 h-14 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-4 group-hover:border-primary/40 transition-colors duration-300">
+                  <Mail className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="font-bold text-base mb-1">Email</h3>
+                <a href={MAILTO} className="text-primary text-sm font-medium" data-testid="link-contact-email">
+                  Geral@teclick.pt
+                </a>
               </Card>
             </FadeIn>
 
-            <FadeIn delay={150} className="lg:col-span-2 space-y-5">
-              <Card className="p-6 border-border/50" data-testid="card-contact-info">
-                <h3 className="font-bold text-base mb-5">Informações</h3>
-                <div className="space-y-5">
-                  <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-md bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
-                      <MapPin className="w-5 h-5 text-primary" />
-                    </div>
-                    <div>
-                      <p className="font-medium text-sm">Morada</p>
-                      <p className="text-muted-foreground text-sm">Av. Portas Fronhas 264</p>
-                      <p className="text-muted-foreground text-sm">4480-004 Vila do Conde</p>
-                    </div>
-                  </div>
+            <FadeIn delay={100}>
+              <Card className="p-6 border-border/50 text-center group hover-elevate" data-testid="card-contact-phone">
+                <div className="w-14 h-14 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-4 group-hover:border-primary/40 transition-colors duration-300">
+                  <Phone className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="font-bold text-base mb-1">Telefone</h3>
+                <a href="tel:935133610" className="text-primary text-sm font-medium" data-testid="link-contact-phone">
+                  935 133 610
+                </a>
+              </Card>
+            </FadeIn>
 
-                  <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-md bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
-                      <Phone className="w-5 h-5 text-primary" />
-                    </div>
-                    <div>
-                      <p className="font-medium text-sm">Telefone</p>
-                      <a href="tel:935133610" className="text-primary text-sm font-medium" data-testid="link-contact-phone">
-                        935 133 610
-                      </a>
-                    </div>
-                  </div>
+            <FadeIn delay={200}>
+              <Card className="p-6 border-border/50 text-center group hover-elevate" data-testid="card-contact-location">
+                <div className="w-14 h-14 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-4 group-hover:border-primary/40 transition-colors duration-300">
+                  <MapPin className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="font-bold text-base mb-1">Morada</h3>
+                <p className="text-muted-foreground text-sm">Av. Portas Fronhas 264</p>
+                <p className="text-muted-foreground text-sm">4480-004 Vila do Conde</p>
+              </Card>
+            </FadeIn>
+          </div>
 
-                  <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-md bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
-                      <Clock className="w-5 h-5 text-primary" />
-                    </div>
-                    <div>
-                      <p className="font-medium text-sm">Horário</p>
-                      <div className="text-muted-foreground text-sm space-y-0.5">
-                        <p>Seg-Sex: 10:00-12:30 | 14:30-19:00</p>
-                        <p>Sáb: 10:00-13:00</p>
-                        <p>Dom: Encerrado</p>
+          <FadeIn delay={300}>
+            <div className="mt-10 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Card className="p-6 border-border/50" data-testid="card-hours">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-md bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
+                    <Clock className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-base mb-2">Horário</h3>
+                    <div className="text-muted-foreground text-sm space-y-1">
+                      <div className="flex justify-between gap-6">
+                        <span>Segunda a Sexta</span>
+                        <span>10:00-12:30 | 14:30-19:00</span>
+                      </div>
+                      <div className="flex justify-between gap-6">
+                        <span>Sábado</span>
+                        <span>10:00-13:00</span>
+                      </div>
+                      <div className="flex justify-between gap-6">
+                        <span>Domingo</span>
+                        <span className="text-primary/70">Encerrado</span>
                       </div>
                     </div>
                   </div>
@@ -585,16 +437,28 @@ export default function Home() {
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2994.5!2d-8.7437!3d41.3514!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDIxJzA1LjAiTiA4wrA0NCczNC4wIlc!5e0!3m2!1spt-PT!2spt!4v1"
                   width="100%"
-                  height="220"
-                  style={{ border: 0 }}
+                  height="100%"
+                  style={{ border: 0, minHeight: "180px" }}
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                   title="Localização TECLiCK"
                 />
               </div>
-            </FadeIn>
-          </div>
+            </div>
+          </FadeIn>
+
+          <FadeIn delay={400}>
+            <div className="text-center mt-12">
+              <a href={MAILTO}>
+                <Button size="lg" className="text-base px-10 group" data-testid="button-contact-cta">
+                  <Mail className="w-4 h-4 mr-2" />
+                  Enviar Email
+                  <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </a>
+            </div>
+          </FadeIn>
         </div>
       </section>
 
@@ -620,10 +484,12 @@ export default function Home() {
           </FadeIn>
           <FadeIn delay={200}>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button size="lg" className="text-base px-8 group" onClick={() => scrollTo("#contactos")} data-testid="button-cta-final">
-                Começar Agora
-                <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
-              </Button>
+              <a href={MAILTO}>
+                <Button size="lg" className="text-base px-8 group" data-testid="button-cta-final">
+                  Começar Agora
+                  <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </a>
               <a href="tel:935133610">
                 <Button variant="outline" size="lg" className="text-base px-8" data-testid="button-cta-phone">
                   <Phone className="w-4 h-4 mr-2" />
