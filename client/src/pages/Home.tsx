@@ -281,7 +281,7 @@ export default function Home() {
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mt-20 max-w-3xl mx-auto">
             {[
-              { number: "500+", label: "Reparações" },
+              { number: "5000+", label: "Reparações" },
               { number: "50+", label: "Websites" },
               { number: "4.9", label: "Avaliação" },
               { number: "98%", label: "Satisfação" },
