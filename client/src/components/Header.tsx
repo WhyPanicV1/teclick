@@ -1,48 +1,55 @@
-import { useState } from "react";
-import { Link, useLocation } from "wouter";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Phone, Menu, X } from "lucide-react";
+import logoPath from "@assets/WhatsApp_Image_2026-02-25_at_10.26.56_1772015271484.jpeg";
 
 const navLinks = [
-  { href: "/", label: "Início" },
-  { href: "/servicos", label: "Serviços" },
-  { href: "/sobre", label: "Sobre" },
-  { href: "/contactos", label: "Contactos" },
+  { href: "#servicos", label: "Serviços" },
+  { href: "#porque", label: "Porquê Nós" },
+  { href: "#testemunhos", label: "Testemunhos" },
+  { href: "#contactos", label: "Contactos" },
 ];
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [location] = useLocation();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollTo = (id: string) => {
+    setMobileOpen(false);
+    const el = document.querySelector(id);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
-    <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-background/80 backdrop-blur-xl border-b border-border/50"
+          : "bg-transparent"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-4 h-16 sm:h-20">
-          <Link href="/" data-testid="link-home-logo">
-            <div className="flex items-center gap-2 cursor-pointer">
-              <div className="w-10 h-10 rounded-md bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-lg" style={{ fontFamily: "Space Grotesk, sans-serif" }}>TL</span>
-              </div>
-              <span className="text-xl font-bold tracking-tight" style={{ fontFamily: "Space Grotesk, sans-serif" }}>
-                TEC <span className="text-primary">LICK</span>
-              </span>
-            </div>
-          </Link>
+          <a href="#" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} data-testid="link-home-logo" className="shrink-0">
+            <img src={logoPath} alt="TECLiCK" className="h-10 sm:h-12 w-auto" />
+          </a>
 
           <nav className="hidden md:flex items-center gap-1" data-testid="nav-desktop">
             {navLinks.map((link) => (
-              <Link key={link.href} href={link.href}>
-                <span
-                  className={`px-4 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer ${
-                    location === link.href
-                      ? "text-primary"
-                      : "text-muted-foreground"
-                  }`}
-                  data-testid={`link-nav-${link.label.toLowerCase()}`}
-                >
-                  {link.label}
-                </span>
-              </Link>
+              <button
+                key={link.href}
+                onClick={() => scrollTo(link.href)}
+                className="px-4 py-2 rounded-md text-sm font-medium text-muted-foreground transition-colors cursor-pointer"
+                data-testid={`link-nav-${link.label.toLowerCase().replace(/\s/g, "-")}`}
+              >
+                {link.label}
+              </button>
             ))}
           </nav>
 
@@ -51,9 +58,9 @@ export default function Header() {
               <Phone className="w-4 h-4" />
               935 133 610
             </a>
-            <Link href="/contactos">
-              <Button data-testid="button-header-cta">Pedir Orçamento</Button>
-            </Link>
+            <Button onClick={() => scrollTo("#contactos")} data-testid="button-header-cta">
+              Pedir Orçamento
+            </Button>
           </div>
 
           <Button
@@ -69,33 +76,26 @@ export default function Header() {
       </div>
 
       {mobileOpen && (
-        <div className="md:hidden border-t border-border bg-background" data-testid="nav-mobile">
-          <div className="px-4 py-4 space-y-2">
+        <div className="md:hidden border-t border-border/50 bg-background/95 backdrop-blur-xl" data-testid="nav-mobile">
+          <div className="px-4 py-4 space-y-1">
             {navLinks.map((link) => (
-              <Link key={link.href} href={link.href}>
-                <span
-                  className={`block px-4 py-3 rounded-md text-sm font-medium cursor-pointer ${
-                    location === link.href
-                      ? "text-primary bg-accent"
-                      : "text-foreground"
-                  }`}
-                  onClick={() => setMobileOpen(false)}
-                  data-testid={`link-mobile-${link.label.toLowerCase()}`}
-                >
-                  {link.label}
-                </span>
-              </Link>
+              <button
+                key={link.href}
+                className="block w-full text-left px-4 py-3 rounded-md text-sm font-medium text-foreground cursor-pointer"
+                onClick={() => scrollTo(link.href)}
+                data-testid={`link-mobile-${link.label.toLowerCase().replace(/\s/g, "-")}`}
+              >
+                {link.label}
+              </button>
             ))}
-            <div className="pt-2 border-t border-border">
+            <div className="pt-2 border-t border-border/50">
               <a href="tel:935133610" className="flex items-center gap-2 px-4 py-3 text-sm text-muted-foreground" data-testid="link-phone-mobile">
                 <Phone className="w-4 h-4" />
                 935 133 610
               </a>
-              <Link href="/contactos">
-                <Button className="w-full mt-2" onClick={() => setMobileOpen(false)} data-testid="button-mobile-cta">
-                  Pedir Orçamento
-                </Button>
-              </Link>
+              <Button className="w-full mt-2" onClick={() => scrollTo("#contactos")} data-testid="button-mobile-cta">
+                Pedir Orçamento
+              </Button>
             </div>
           </div>
         </div>

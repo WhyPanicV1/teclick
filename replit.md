@@ -1,43 +1,43 @@
-# TEC LICK Website
+# TECLiCK Website
 
 ## Overview
-Professional, conversion-oriented website for TEC LICK - a technology solutions company located in Vila do Conde, Portugal. The site covers repair services, 3D printing, web development, e-commerce, and AI solutions.
+Professional, futuristic single-page website for TECLiCK - a technology solutions company in Vila do Conde, Portugal. Dark theme with red accent colors matching the brand logo.
 
 ## Architecture
-- **Frontend**: React + TypeScript with Vite, Tailwind CSS, shadcn/ui components
-- **Backend**: Express.js API
-- **Routing**: wouter (client-side)
+- **Frontend**: React + TypeScript with Vite, Tailwind CSS, shadcn/ui
+- **Backend**: Express.js API (contact form)
 - **Storage**: In-memory (contact form submissions)
+- **Design**: Single-page, dark futuristic theme, CSS animations (no framer-motion)
 
-## Pages
-- `/` - Homepage (hero, services overview, testimonials, map, CTAs)
-- `/servicos` - Services page (detailed service blocks with benefits)
-- `/sobre` - About page (company story, values, stats)
-- `/contactos` - Contact page (form, contact info, map)
+## Sections (Single Page)
+- Hero with gradient effects and grid pattern
+- Services (6 service cards with features)
+- Why Us (4 differentiators + stats)
+- Testimonials (3 client reviews)
+- Contact (form + info + map)
+- Final CTA
 
 ## Key Files
-- `client/src/App.tsx` - Main app with routing
-- `client/src/components/Header.tsx` - Navigation header
+- `client/src/App.tsx` - App wrapper (no routing, single page)
+- `client/src/components/Header.tsx` - Sticky nav with smooth scroll
 - `client/src/components/Footer.tsx` - Site footer
-- `client/src/pages/Home.tsx` - Homepage
-- `client/src/pages/Services.tsx` - Services page
-- `client/src/pages/About.tsx` - About page
-- `client/src/pages/Contact.tsx` - Contact page with form
-- `server/routes.ts` - API endpoint for contact form
-- `server/storage.ts` - In-memory storage for submissions
+- `client/src/pages/Home.tsx` - Full single-page layout with all sections
+- `server/routes.ts` - POST /api/contact endpoint
+- `server/storage.ts` - In-memory storage
 - `shared/schema.ts` - Contact form Zod schema
 
 ## Design
-- Color scheme: Orange primary (#F97316) with neutral grays
-- Font: Inter (body) + Space Grotesk (headings)
-- Mobile-first responsive design
-- Portuguese language (PT-PT)
+- Color scheme: Red primary (hsl 0 85% 50%) on dark background (#0a0a0a)
+- Font: Space Grotesk (headings + body) + Inter (fallback)
+- Logo: `/logo.jpeg` (also imported via @assets)
+- Grid patterns, red glows, gradient text effects
+- CSS-based fade-in animations on scroll (IntersectionObserver)
 
-## API Endpoints
+## API
 - `POST /api/contact` - Submit contact form
 
 ## Business Info
-- Company: TEC LICK
-- Location: Av. Portas Fronhas 264, 4480-004 Vila do Conde, Portugal
+- Company: TECLiCK
+- Location: Av. Portas Fronhas 264, 4480-004 Vila do Conde
 - Phone: 935 133 610
 - Hours: Mon-Fri 10:00-12:30 | 14:30-19:00, Sat 10:00-13:00, Sun: Closed
