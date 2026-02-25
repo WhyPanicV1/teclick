@@ -1,0 +1,114 @@
+Cria um website profissional, moderno e altamente orientado a conversão para a empresa TEC LICK.
+
+### 1. CONTEXTO DO NEGÓCIO
+A TEC LICK é uma loja física e digital especializada em tecnologia, localizada em Vila do Conde, Portugal.  
+O posicionamento da marca é: solução tecnológica completa num único local, tanto para particulares como para empresas.
+
+Áreas de atuação:
+- Reparação de telemóveis (iPhone, Android)
+- Reparação de computadores (Windows e Mac)
+- Impressão 3D (prototipagem, peças personalizadas)
+- Construção de websites institucionais
+- Criação de lojas online (e-commerce)
+- Soluções com Inteligência Artificial (automação, chatbots, otimização de processos)
+- Consultoria tecnológica para negócios
+
+O site deve transmitir:
+- Confiança
+- Competência técnica
+- Modernidade
+- Clareza
+- Foco em resultados
+
+Nada de aspeto amador ou genérico.
+
+---
+
+### 2. DADOS OBRIGATÓRIOS DA EMPRESA
+Nome: TEC LICK  
+Morada: Av. Portas Fronhas 264, 4480-004 Vila do Conde, Portugal  
+Contacto telefónico: 935 133 610  
+
+Horário:
+- Segunda a Sexta: 10:00–12:30 | 14:30–19:00
+- Sábado: 10:00–13:00
+- Domingo: Encerrado
+
+O logo fornecido deve ser utilizado de forma consistente (header, favicon e identidade visual).
+
+---
+
+### 3. ESTRUTURA DO WEBSITE (OBRIGATÓRIA)
+
+#### Homepage
+- Hero section forte com headline clara (ex: “Tecnologia sem complicações” ou equivalente)
+- Subheadline explicando rapidamente tudo o que a TEC LICK faz
+- CTA principal: “Pedir Orçamento” / “Falar Connosco”
+- Destaque visual dos principais serviços
+- Secção “Porque escolher a TEC LICK”
+- Testemunhos (usar placeholders realistas)
+- Mapa com localização física
+- CTA final forte
+
+#### Serviços (página dedicada ou secções bem separadas)
+Criar blocos individuais para:
+- Reparação de Telemóveis
+- Reparação de Computadores
+- Impressão 3D
+- Criação de Websites
+- Lojas Online
+- Soluções com Inteligência Artificial
+
+Cada serviço deve ter:
+- Breve explicação clara
+- Benefícios práticos
+- Para quem é indicado
+- CTA específico
+
+#### Página Sobre
+- História resumida
+- Foco em know-how técnico e resolução de problemas
+- Linguagem simples, sem clichés vazios
+
+#### Página Contactos
+- Formulário simples e direto
+- Dados de contacto visíveis
+- Mapa Google integrado
+- Horário de funcionamento
+
+---
+
+### 4. DESIGN & UX
+- Design moderno, clean, tecnológico
+- Mobile-first (prioridade absoluta)
+- Tipografia profissional
+- Paleta de cores alinhada com o logo (laranja + neutros)
+- Ícones claros e consistentes
+- Animações subtis (nada pesado)
+
+---
+
+### 5. SEO & PERFORMANCE
+- Estrutura otimizada para SEO local (Vila do Conde, reparação telemóveis, informática, tecnologia)
+- HTML semântico
+- Meta titles e descriptions bem pensados
+- Boa performance (rápido, leve)
+
+---
+
+### 6. TOM DE COMUNICAÇÃO
+- Profissional mas acessível
+- Confiante, sem arrogância
+- Linguagem clara, sem jargão técnico excessivo
+- Orientado a resolver problemas reais dos clientes
+
+---
+
+### 7. OBJETIVO FINAL
+O website deve:
+- Gerar contactos
+- Levar pessoas à loja física
+- Posicionar a TEC LICK como referência tecnológica local
+- Servir tanto clientes finais como pequenos negócios
+
+Entrega o site como se fosse um projeto real para um cliente exigente.
