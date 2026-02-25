@@ -27,7 +27,12 @@ const MAILTO = "mailto:Geral@teclick.pt?subject=Pedido%20de%20Or%C3%A7amento";
 function FadeIn({ children, className = "", delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
   const ref = useRef<HTMLDivElement>(null);
 
+  // Desativar animações em ecrãs pequenos para melhorar performance no telemóvel
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
   useEffect(() => {
+    if (isMobile) return;
+
     const el = ref.current;
     if (!el) return;
     const observer = new IntersectionObserver(
@@ -44,17 +49,21 @@ function FadeIn({ children, className = "", delay = 0 }: { children: ReactNode; 
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, [delay]);
+  }, [delay, isMobile]);
+
+  const style = isMobile
+    ? undefined
+    : {
+        opacity: 0,
+        transform: "translateY(30px)",
+        transition: `opacity 0.6s ease-out ${delay}ms, transform 0.6s ease-out ${delay}ms`,
+      };
 
   return (
     <div
       ref={ref}
       className={className}
-      style={{
-        opacity: 0,
-        transform: "translateY(30px)",
-        transition: `opacity 0.6s ease-out ${delay}ms, transform 0.6s ease-out ${delay}ms`,
-      }}
+      style={style}
     >
       {children}
     </div>
